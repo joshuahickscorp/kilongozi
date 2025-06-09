@@ -194,12 +194,10 @@ footer {
 }
 
 .service-card {
-    background: var(--secondary-color);
-    border: 1px solid var(--accent-color);
-    padding: 1.5rem;
-    border-radius: 8px;
-    transition: transform .3s ease;
-    text-align: left;
+    text-align: center;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
 }
 
 .service-card:hover {
@@ -214,22 +212,19 @@ footer {
 }
 
 .service-card ul {
-    list-style: none;
-    padding-left: 1rem;
+    padding-left: 0;
+    margin-top: 1rem;
 }
 
 .service-card li {
-    margin-bottom: .5rem;
-    position: relative;
-    padding-left: 1.2rem;
-    opacity: .9;
+    position: static;
+    padding-left: 0;
+    list-style: none;
+    text-align: center;
 }
 
 .service-card li::before {
-    content: "•";
-    position: absolute;
-    left: 0;
-    color: var(--primary-color);
+    content: none !important;
 }
 
 .modal {
