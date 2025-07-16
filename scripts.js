@@ -10,6 +10,17 @@ document.addEventListener('DOMContentLoaded', () => {
         history.pushState(null, null, `#${pageId}`);
     };
 
+    // Form tab switching
+    document.querySelector('.form-tabs')?.addEventListener('click', e => {
+        if (e.target.classList.contains('form-tab')) {
+            const formId = e.target.dataset.form;
+            document.querySelectorAll('.form-tab').forEach(t => t.classList.remove('active'));
+            e.target.classList.add('active');
+            document.querySelectorAll('.contact-form').forEach(f => f.classList.remove('active'));
+            document.getElementById(`${formId}Form`).classList.add('active');
+        }
+    });
+
     document.querySelector('nav').addEventListener('click', e => {
         if (e.target.tagName === 'A') {
             e.preventDefault();
@@ -34,48 +45,96 @@ document.addEventListener('DOMContentLoaded', () => {
     updateClock();
     setInterval(updateClock, 1000);
 
-    // Form handling
-    const formTabs = document.querySelectorAll('.form-tab');
-    const contactForms = document.querySelectorAll('.contact-form');
-
-    document.querySelector('.form-tabs').addEventListener('click', e => {
-        if (e.target.classList.contains('form-tab')) {
-            const formId = e.target.dataset.form;
-            formTabs.forEach(t => t.classList.remove('active'));
-            e.target.classList.add('active');
-            contactForms.forEach(f => f.classList.remove('active'));
-            document.getElementById(`${formId}Form`).classList.add('active');
-        }
-    });
-
+    // Enhanced Form Handling with API verification
     document.querySelectorAll('.contact-form').forEach(form => {
-        const msg = form.querySelector('#form-message');
+        const msg = form.querySelector('.form-message');
+        const submitBtn = form.querySelector('button[type="submit"]');
+        const originalBtnText = submitBtn.textContent;
+        
         form.addEventListener('submit', async e => {
             e.preventDefault();
+            
+            // Show loading state
             msg.style.display = 'block';
+            msg.textContent = 'Submitting form...';
+            msg.style.backgroundColor = '#2196F3'; // Blue
+            submitBtn.disabled = true;
+            submitBtn.textContent = 'Sending...';
             
             try {
+                // Prepare form data
+                const formData = new FormData(form);
+                
+                // Add Formspree's required fields
+                formData.append('_gotcha', ''); // Honeypot
+                formData.append('_format', 'plain'); // Text format
+                
                 const response = await fetch(form.action, {
                     method: 'POST',
-                    body: new FormData(form),
-                    headers: { 'Accept': 'application/json' }
+                    body: formData,
+                    headers: { 
+                        'Accept': 'application/json',
+                        'X-Requested-With': 'XMLHttpRequest'
+                    }
                 });
-
-                if (response.ok) {
+                
+                // Parse response regardless of status
+                const result = await response.json();
+                
+                // Check for actual success indicators from Formspree
+                const isSuccess = response.ok && 
+                                  (result.success || result.ok || result.next);
+                
+                if (isSuccess) {
+                    // Success handling
                     msg.textContent = form.id === 'generalForm' ? 
-                        'Thank you! Your inquiry has been submitted.' : 
-                        'Case intake submitted successfully.';
-                    msg.style.backgroundColor = '#4CAF50';
+                        '✓ Thank you! Your inquiry has been submitted.' : 
+                        '✓ Case intake submitted successfully.';
+                    msg.style.backgroundColor = '#4CAF50'; // Green
                     form.reset();
+                    
+                    // Log successful submission
+                    console.log('Form submitted successfully:', {
+                        form: form.id,
+                        time: new Date().toISOString(),
+                        response: result
+                    });
                 } else {
-                    throw new Error('Submission failed');
+                    // Handle Formspree errors
+                    const errorMsg = result.error || 
+                                   result.errors?.map(e => e.message).join('. ') || 
+                                   `Submission failed (${response.status})`;
+                    throw new Error(errorMsg);
                 }
             } catch (error) {
-                msg.textContent = 'Error submitting form. Please try again later.';
-                msg.style.backgroundColor = '#f44336';
+                // Show detailed error message
+                msg.textContent = `✗ ${error.message}`;
+                msg.style.backgroundColor = '#f44336'; // Red
+                
+                // Add "Form not sent" indicator
+                const notSent = document.createElement('div');
+                notSent.textContent = 'Form not sent. Please try again.';
+                notSent.style.fontSize = '0.9em';
+                notSent.style.marginTop = '8px';
+                msg.appendChild(notSent);
+                
+                // Log full error
+                console.error('Form submission failed:', {
+                    error: error.message,
+                    form: form.id,
+                    time: new Date().toISOString()
+                });
+            } finally {
+                // Reset button state
+                submitBtn.disabled = false;
+                submitBtn.textContent = originalBtnText;
+                
+                // Hide message after 8 seconds
+                setTimeout(() => {
+                    msg.style.display = 'none';
+                    msg.replaceChildren(); // Clear appended elements
+                }, 8000);
             }
-            
-            setTimeout(() => msg.style.display = 'none', 5000);
         });
     });
 
