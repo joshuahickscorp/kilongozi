@@ -140,25 +140,27 @@
                         <div class="service-card">
                             <center>
                                 <h2>Criminal Law</h2>
-                            <h4><b>Defense representation for:</b></h4>
-                            <ul>
-                                <p>DUI offenses</p>
-                                <p>Assault charges</p>
-                                <p>Theft & fraud</p>
-                                <p>Drug offenses</p>
-                                <p>Appeals</p>
-                            </ul>
+                                <h4><b>Defense representation for:</b></h4>
+                                <ul>
+                                    <p>DUI offenses</p>
+                                    <p>Assault charges</p>
+                                    <p>Theft & fraud</p>
+                                    <p>Drug offenses</p>
+                                    <p>Appeals</p>
+                                </ul>
                             </center>
                         </div>
                         <div class="service-card">
-                            <center><h2>Immigration Law</h2>
+                            <center>
+                                <h2>Immigration Law</h2>
                                 <h4><b>Guidance through complex processes:</b></h4>
                                 <ul>
                                     <p>Work permits & visas</p>
                                     <p>Permanent residency</p>
                                     <p>Citizenship apppcations</p>
                                     <p>Deportation defense</p>
-                                </ul></center>
+                                </ul>
+                            </center>
                         </div>
                         <div class="service-card">
                             <center>
@@ -182,7 +184,7 @@
                 <section class="section">
                     <h3>Our Team</h3>
                     <div class="team-list">
-                        <p>Kibondo M. Kilongozi - Senior Lawyer</p>
+                        <p>Kibond M. Kilongozi - Senior Lawyer</p>
                         <p>Herve Elesse Mupote - Immigration Lawyer</p>
                         <p>Michel Carlos Docteur - Researcher</p>
                         <p>Dou Dou Gabriel Diunasumbu - Researcher</p>
@@ -197,44 +199,95 @@
             <div class="container">
                 <section class="section">
                     <h3>Contact Us</h3>
+
+                    <!-- Form Tabs -->
                     <div class="form-tabs">
-                        <div class="form-tab active" data-form="general" role="button" tabindex="0">General Inquiry
-                        </div>
-                        <div class="form-tab" data-form="intake" role="button" tabindex="0">Case Intake Form</div>
+                        <div class="form-tab active" data-form="general">General Inquiry</div>
+                        <div class="form-tab" data-form="intake">Case Intake Form</div>
                     </div>
+
+                    <!-- General Inquiry Form -->
                     <form class="contact-form active" id="generalForm" action="https://formspree.io/f/meogever"
                         method="POST">
+
+                        <!-- Add these inside both <form> tags -->
+                        <input type="hidden" name="_filter" value="rules">
+                        <input type="hidden" name="_email.template.subject"
+                            value="New Contact from Kilongozi Law Office">
+                        <input type="hidden" name="_email.template.footer"
+                            value="This message was sent from the contact form on kilongozilawoffice.com">
+
+                        <!-- Formspree System Fields -->
+                        <input type="hidden" name="_subject" value="New General Inquiry - Kilongozi Law Office">
+                        <input type="hidden" name="_replyto" value="">
+                        <input type="hidden" name="_format" value="plain">
+                        <input type="text" name="_gotcha" style="display:none">
+
+                        <!-- Original Fields -->
                         <input type="text" name="name" placeholder="Name" required aria-label="Your Name">
                         <input type="email" name="email" placeholder="Email" required aria-label="Your Email">
+                        <input type="tel" name="phone" placeholder="Phone Number (optional)" aria-label="Phone Number">
                         <textarea name="message" rows="5" placeholder="Message" required
                             aria-label="Your Message"></textarea>
+
+                        <div class="form-message"></div>
                         <button type="submit">Send Message</button>
                     </form>
+
+                    <!-- Case Intake Form -->
                     <form class="contact-form" id="intakeForm" action="https://formspree.io/f/mvgazdzl" method="POST">
+
+                        <!-- Add these inside both <form> tags -->
+                        <input type="hidden" name="_filter" value="rules">
+                        <input type="hidden" name="_email.template.subject"
+                            value="New Contact from Kilongozi Law Office">
+                        <input type="hidden" name="_email.template.footer"
+                            value="This message was sent from the contact form on kilongozilawoffice.com">
+
+                        <!-- Formspree System Fields -->
+                        <input type="hidden" name="_subject" value="New Case Intake - Kilongozi Law Office">
+                        <input type="hidden" name="_replyto" value="">
+                        <input type="hidden" name="_format" value="plain">
+                        <input type="text" name="_gotcha" style="display:none">
+
+                        <!-- Original Fields -->
                         <input type="text" name="full_name" placeholder="Full Name" required aria-label="Full Name">
                         <input type="tel" name="phone" placeholder="Phone Number" required aria-label="Phone Number">
                         <input type="email" name="email" placeholder="Email" required aria-label="Email">
+
                         <select name="case_type" required aria-label="Case Type">
                             <option value="">Case Type</option>
                             <option value="Family Law">Family Law</option>
                             <option value="Criminal Law">Criminal Law</option>
                             <option value="Immigration Law">Immigration Law</option>
                         </select>
-                        <input type="date" name="incident_date" placeholder="Incident Date" required
-                            aria-label="Incident Date">
+
+                        <input type="date" name="incident_date" placeholder="Incident Date" aria-label="Incident Date">
                         <textarea name="case_summary" rows="3" placeholder="Brief case summary" required
                             aria-label="Case Summary"></textarea>
                         <textarea name="previous_actions" rows="3" placeholder="Previous legal actions taken"
                             aria-label="Previous Actions"></textarea>
                         <input type="text" name="opposing_party" placeholder="Opposing party name(s)"
                             aria-label="Opposing Party">
-                        <label><input type="checkbox" name="accuracy_verification" required> I verify this information
-                            is accurate</label>
-                        <div id="form-message"></div>
+
+                        <label class="consent-checkbox">
+                            <input type="checkbox" name="accuracy_verification" required>
+                            I verify this information is accurate
+                        </label>
+
+                        <div class="form-message"></div>
                         <button type="submit">Submit Intake</button>
                     </form>
-                    <div class="office-address">
-                        <p>📍 270 Elgin St, Ottawa, ON K2P 1M6</p>
+
+                    <!-- Contact Info -->
+                    <div class="contact-info">
+                        <div class="office-address">
+                            <p>📍 <strong>270 Elgin St, Ottawa, ON K2P 1M6</strong></p>
+                        </div>
+                        <div class="contact-methods">
+                            <p>📞 <a href="tel:+16132362268">(613) 236-2268</a></p>
+                            <p>✉️ <a href="mailto:info@kilongozilawoffice.com">info@kilongozilawoffice.com</a></p>
+                        </div>
                     </div>
                 </section>
             </div>
