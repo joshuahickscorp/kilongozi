@@ -309,12 +309,85 @@ footer {
     cursor: pointer;
 }
 
-#form-message {
+/* Add to styles.css */
+.form-message {
     display: none;
-    padding: 1rem;
-    margin: 1rem 0;
+    padding: 12px;
+    margin: 15px 0;
     border-radius: 4px;
     color: white;
+    text-align: center;
+}
+
+.form-message.success { background: #4CAF50; } /* Green */
+.form-message.error { background: #f44336; } /* Red */
+.form-message.loading { background: #2196F3; } /* Blue */
+
+/* Form tab styling */
+.form-tabs {
+    display: flex;
+    gap: 10px;
+    margin-bottom: 20px;
+    justify-content: center;
+}
+
+.form-tab {
+    padding: 10px 20px;
+    cursor: pointer;
+    border-radius: 4px;
+    background: #000;
+}
+
+.form-tab.active {
+    background: #ddd;
+    font-weight: bold;
+}
+
+.contact-form {
+    display: none;
+    flex-direction: column;
+    gap: 15px;
+    max-width: 600px;
+    margin: 0 auto;
+}
+
+.contact-form.active {
+    display: flex;
+}
+
+.h-captcha {
+    margin: 1rem 0;
+    display: flex;
+    justify-content: center;
+}
+
+.form-loading {
+    position: relative;
+    pointer-events: none;
+}
+
+.form-loading::after {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    background: rgba(255, 255, 255, 0.5);
+    z-index: 10;
+}
+
+.consent-checkbox {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    margin: 10px 0;
+    font-size: 0.9em;
+}
+
+.consent-checkbox input[type="checkbox"] {
+    width: auto;
+    margin: 0;
 }
 
 .about-section ul {
